@@ -23,6 +23,4 @@ A continuación, se presenta la descomposición de los requisitos funcionales de
 
 ---
 
-### ✨ Observación
 
-Cada requisito funcional ha sido analizado y descompuesto en tareas específicas, siguiendo los principios de la programación orientada a objetos. Esta estructura favorece la escalabilidad, reutilización de código y claridad del sistema.

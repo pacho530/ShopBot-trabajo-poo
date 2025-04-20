@@ -1,5 +1,3 @@
-from bot import Bot
-
 from app.bot import Bot
 
 bot = Bot("Shopbot")

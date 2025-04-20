@@ -1,24 +1,5 @@
-from datetime import datetime
-
-
-# app/bot.py
-import random
-
-class PalabraClave:
-    def __init__(self, palabra, respuestas):
-        self.palabra = palabra.lower()
-        self.respuestas = respuestas if isinstance(respuestas, list) else [respuestas]
-        self.usos = 0
-
-    def obtener_respuesta(self):
-        self.usos += 1
-        return random.choice(self.respuestas)
-
-class Interaccion:
-    def __init__(self, usuario, mensaje, respuesta):
-        self.usuario = usuario
-        self.mensaje = mensaje
-        self.respuesta = respuesta
+from app.palabra_clave import PalabraClave
+from app.interaccion import Interaccion
 
 class Bot:
     def __init__(self, nombre):
@@ -49,7 +30,7 @@ class Bot:
         return respuesta_final
 
     def mostrar_historial(self):
-        print("\nHistorial de interacciones:")
+        print("\n🧾 Historial de interacciones:")
         for i, interaccion in enumerate(self.interacciones, 1):
             print(f"{i}. {interaccion.usuario}: {interaccion.mensaje} => {interaccion.respuesta}")
 

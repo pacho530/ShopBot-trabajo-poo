@@ -29,17 +29,17 @@ class Bot:
         self.interacciones.append(Interaccion(usuario, mensaje_usuario, respuesta_final))
         return respuesta_final
 
-    def mostrar_historial(self):
-        print("\n🧾 Historial de interacciones:")
-        for i, interaccion in enumerate(self.interacciones, 1):
-            print(f"{i}. {interaccion.usuario}: {interaccion.mensaje} => {interaccion.respuesta}")
+    def obtener_historial(self):
+        historial = []
+        for interaccion in self.interacciones:
+            historial.append(f"{interaccion.usuario}: {interaccion.mensaje} => {interaccion.respuesta}")
+        return historial
 
-    def mostrar_frecuencia_uso(self):
-        print("\n📊 Frecuencia de uso de palabras clave:")
-        if not self.palabras_clave:
-            print("No hay palabras clave registradas.")
-            return
+    def obtener_frecuencia_uso(self):
+        frecuencia = []
         for pc in sorted(self.palabras_clave, key=lambda x: x.usos, reverse=True):
-            print(f"- '{pc.palabra}': {pc.usos} usos")
+            frecuencia.append(f"'{pc.palabra}': {pc.usos} usos")
+        return frecuencia
+
 
 

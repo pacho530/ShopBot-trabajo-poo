@@ -1,45 +1,45 @@
-from app.palabra_clave import PalabraClave
-from app.interaccion import Interaccion
+# bot.py
 
 class Bot:
     def __init__(self, nombre):
         self.nombre = nombre
-        self.palabras_clave = []
-        self.interacciones = []
+        self.reglas = []
 
-    def agregar_palabra_clave(self, palabra, respuestas):
-        respuestas_lista = [r.strip() for r in respuestas.split("|")]
-        nueva = PalabraClave(palabra, respuestas_lista)
-        self.palabras_clave.append(nueva)
+    def set_reglas(self, reglas):
+        """
+        Actualiza la lista de reglas del bot.
+        Cada regla es un diccionario con:
+            - palabra: la palabra clave a buscar
+            - tipo: 'Palabra exacta' o 'Contiene la palabra'
+            - respuesta: el texto de respuesta que debe dar el bot
+        """
+        self.reglas = reglas
 
-    def responder(self, usuario, mensaje_usuario):
-        mensaje = mensaje_usuario.lower()
-        respuestas = []
+    def responder(self, usuario, mensaje):
+        """
+        Recibe el nombre del usuario y el mensaje recibido.
+        Retorna la respuesta según las reglas o un mensaje por defecto.
+        """
+        mensaje_lower = mensaje.lower()
 
-        for palabra_clave in self.palabras_clave:
-            if palabra_clave.palabra in mensaje:
-                respuesta = palabra_clave.obtener_respuesta()
-                respuestas.append(respuesta)
+        for regla in self.reglas:
+            palabra = regla["palabra"].lower()
+            tipo = regla["tipo"]
+            respuesta = regla["respuesta"]
 
-        if respuestas:
-            respuesta_final = " ".join(respuestas)
-        else:
-            respuesta_final = "Lo siento, no entendí tu mensaje."
+            if tipo == "Palabra exacta":
+                if mensaje_lower == palabra:
+                    return respuesta
 
-        self.interacciones.append(Interaccion(usuario, mensaje_usuario, respuesta_final))
-        return respuesta_final
+            elif tipo == "Contiene la palabra":
+                if palabra in mensaje_lower:
+                    return respuesta
 
-    def obtener_historial(self):
-        historial = []
-        for interaccion in self.interacciones:
-            historial.append(f"{interaccion.usuario}: {interaccion.mensaje} => {interaccion.respuesta}")
-        return historial
+        return "No entendí, ¿puedes reformular?"
 
-    def obtener_frecuencia_uso(self):
-        frecuencia = []
-        for pc in sorted(self.palabras_clave, key=lambda x: x.usos, reverse=True):
-            frecuencia.append(f"'{pc.palabra}': {pc.usos} usos")
-        return frecuencia
+
+
+
 
 
 
